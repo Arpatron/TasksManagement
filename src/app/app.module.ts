@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { TaskListComponent } from './components/tasks/task-list/task-list.component';
 import { TaskCreateComponent } from './components/tasks/task-create/task-create.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TaskCreateComponent } from './components/tasks/task-create/task-create.
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [HomeComponent]
