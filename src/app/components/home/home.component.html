@@ -1,1 +1,19 @@
-<p>home works!</p>
+<div class="container">
+    <header class="py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+            <div class="col-md-4">
+                <a [routerLink]="['/taskList']">{{title}}</a>
+            </div>
+            <div class="col-md-4 text-center">
+                <label>Welcome {{user}}</label>
+            </div>
+            <div class="col-md-4 d-flex justify-content-end">
+                <button class="btn btn-sm btn-outline-secondary" (click)="logOut()">Log out</button>
+            </div>
+        </div>
+    </header>
+</div>
+<div class="container">
+    <router-outlet></router-outlet>
+    <a [routerLink]="['/newTask']" class="btn btn-sm btn-info">Add</a>
+</div>
