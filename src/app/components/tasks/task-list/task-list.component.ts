@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoList } from 'src/app/core/models/todo-list';
-import { States } from 'src/app/core/models/states.enum';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import { Task } from 'src/app/core/models/task';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { TodoList } from '../../../core/models/todo-list';
+import { Task } from '../../../core/models/task';
+import { UserService } from '../../../core/services/user.service';
+import { TaskService } from '../../../core/services/task.service';
 
 @Component({
   selector: 'app-task-list',
@@ -11,27 +12,41 @@ import { Task } from 'src/app/core/models/task';
 })
 export class TaskListComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _userService: UserService,
+    private _taskService: TaskService
+  ) { }
+
   myList: TodoList = new TodoList();
   todo: Task[] = [];
   done: Task[] = [];
-
+  email: string = 'mail@mail.com';
   ngOnInit() {
-    this.getData();
+    this.getUser();
   }
 
-  getData() {
-    this.myList.tasks = [];
-    // Here we'll call the service, for now use moked data
-    this.mokData();
+  getUser() {
+    this._userService.getUser(this.email).subscribe(user => {
+      this._userService.storeUser(user);
+      this.getData(user.id);
+    });
+  }
 
-    // call when the service retrieve data
-    this.setUpLists();
+  getData(idUser: string) {
+    this.myList.tasks = [];
+    this._taskService.getAllTasks(idUser).subscribe(
+      tasks => {
+        tasks.forEach(task => {
+          this.myList.tasks.push(task);
+        });
+        this.setUpLists();
+      }
+    );
   }
 
   setUpLists() {
-    this.todo = this.myList.tasks.filter(x => x.state == States.undone);
-    this.done = this.myList.tasks.filter(x => x.state == States.done);
+    this.todo = this.myList.tasks.filter(x => x.isCompleted == false);
+    this.done = this.myList.tasks.filter(x => x.isCompleted == true);
   }
 
   drop(event: CdkDragDrop<string[]>) {
@@ -39,32 +54,9 @@ export class TaskListComponent implements OnInit {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     }
-  }
-
-  mokData() {
-    this.myList.tasks.push({
-      id: 0,
-      description: 'Buy food',
-      state: States.undone
-    });
-    this.myList.tasks.push({
-      id: 1,
-      description: 'Wash dishes',
-      state: States.done
-    });
-    this.myList.tasks.push({
-      id: 2,
-      description: 'Go to gym',
-      state: States.done
-    });
-    this.myList.tasks.push({
-      id: 3,
-      description: 'Read for a while',
-      state: States.undone
-    });
   }
 }

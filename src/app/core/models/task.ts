@@ -1,7 +1,18 @@
-import { States } from './states.enum';
 
 export class Task {
-    id: number;
+    id: string;
+    idUser: string;
     description: string;
-    state: States;
+    creationDate: Date;
+    isCompleted: boolean;
+}
+
+export class AddTaskRequest{
+    idUser: string;
+    description: string;
+}
+
+export class UpdateTaskRequest{
+    idTask: string;
+    isCompleted: boolean;
 }
