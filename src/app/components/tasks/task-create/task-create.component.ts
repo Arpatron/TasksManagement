@@ -23,7 +23,7 @@ export class TaskCreateComponent implements OnInit {
     this.user = this._userService.getStoredUser();
   }
 
-  addNewTask(){
+  save(){
     let request: AddTaskRequest = {
       description: this.description,
       idUser: this.user.id

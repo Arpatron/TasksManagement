@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserService {
   private urlService: string = 'https://simpletaskmanagerc.azurewebsites.net/Tasks/';
-  private userLoged: User;
+  private userLoged: User = null;
   constructor(private http: HttpClient) { }
 
   storeUser(user: User) {

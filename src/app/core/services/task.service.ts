@@ -22,7 +22,7 @@ export class TaskService {
     return this.http.post<any>(url, body);
   }
 
-  postUpdateTask(request: UpdateTaskRequest): Observable<any>{
+  postUpdateTasks(request: UpdateTaskRequest[]): Observable<any>{
     var body = JSON.parse(JSON.stringify(request));
     let url: string = this.urlService + 'updateTask';
     return this.http.post<any>(url, body);

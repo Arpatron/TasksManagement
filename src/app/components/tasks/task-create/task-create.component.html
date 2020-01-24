@@ -1,1 +1,10 @@
-<p>task-create works!</p>
+<div class="container">
+    <div class="form-group">
+        <label for="description">Description</label>
+        <input [(ngModel)]='description' name="description" type="text" class="form-control" minlength="1"
+            maxlength="50" aria-describedby="Description">
+    </div>
+    <div class="button-group medium-size">
+        <button class="btn btn-sm btn-success" (click)="save()">Submit</button>
+    </div>
+</div>
